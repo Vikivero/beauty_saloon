@@ -1,4 +1,4 @@
-package com.beautysaloon.beauty_saloon;
+package com.beautysaloon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
