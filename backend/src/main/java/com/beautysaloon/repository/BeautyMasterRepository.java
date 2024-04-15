@@ -1,7 +1,12 @@
 package com.beautysaloon.repository;
 
 import com.beautysaloon.model.BeautyMaster;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BeautyMasterRepository extends MongoRepository<BeautyMaster, Long> {
+import java.util.List;
+
+@Repository
+public interface BeautyMasterRepository {
+
+    List<BeautyMaster> findAll();
 }
