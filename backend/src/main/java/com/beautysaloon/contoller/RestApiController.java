@@ -23,14 +23,14 @@ public class RestApiController {
     private BeautyMasterRepository beautyMasterRepository;
 
     @GetMapping("/show-busy")
-    public ResponseEntity<Map<String, List<Instant>>> getAllBusyDatesForAllMasters() {
+    public ResponseEntity<Map<String, List<Integer>>> getAllBusyDatesForAllMasters() {
         List<BeautyMaster> masters = beautyMasterRepository.findAll();
 
-        Map<String, List<Instant>> busyDates = masters.stream()
+        Map<String, List<Integer>> busyDates = masters.stream()
                 .collect(Collectors.toMap(
                         BeautyMaster::getName,
                         master -> master.getAppointments().stream()
-                                .map(Appointment::getTime)
+                                .map(Appointment::getAppointmentWindow)
                                 .collect(Collectors.toList())));
 
         return new ResponseEntity<>(busyDates, HttpStatus.OK);
