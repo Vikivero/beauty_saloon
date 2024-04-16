@@ -43,7 +43,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                                 .id((long) counter)
                                 .appointmentWindow(counter)
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
-                                .beautyMaster(beautyMaster)
+                                .beautyMasterId(beautyMaster.getId())
                                 .build();
                         appointments.add(sampleAppointment);
                     }

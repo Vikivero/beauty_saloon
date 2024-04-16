@@ -9,5 +9,5 @@ public class Appointment {
     private Long id;
     private String patientName;
     private int appointmentWindow;
-    private BeautyMaster beautyMaster;
+    private Long beautyMasterId;
 }
