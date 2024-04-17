@@ -44,11 +44,18 @@ public class RestApiController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Long> registerAppointment(@RequestBody Appointment appointment) {
-        var masterOptional = beautyMasterRepository.findById(appointment.getBeautyMasterId());
+    public ResponseEntity<String> registerAppointment(@RequestBody Appointment appointment) {
+        var masterOptional = beautyMasterRepository.findById(appointment.getMasterId());
 
         if (masterOptional.isPresent()) {
             var master = masterOptional.get();
+
+            var alreadyTakenWindows = master.getAppointments().stream()
+                    .map(Appointment::getAppointmentWindow)
+                    .toList();
+            if (alreadyTakenWindows.contains(appointment.getAppointmentWindow())) {
+                return new ResponseEntity<>("This appointment window is already taken.", HttpStatus.CONFLICT);
+            }
 
             long generatedAppointmentId = Long.parseLong(LocalDate.now().toEpochDay() + "" + master.getId() + "" + appointment.getAppointmentWindow());
             appointment.setId(generatedAppointmentId);
@@ -56,9 +63,9 @@ public class RestApiController {
 
             beautyMasterRepository.save(master);
 
-            return new ResponseEntity<>(generatedAppointmentId, HttpStatus.OK);
+            return new ResponseEntity<>(String.valueOf(generatedAppointmentId), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(-1L, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Master with given id is not found.", HttpStatus.NOT_FOUND);
         }
     }
 }

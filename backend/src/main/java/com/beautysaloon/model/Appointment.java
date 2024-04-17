@@ -12,5 +12,5 @@ public class Appointment {
     private String patientName;
     private LocalDate date;
     private int appointmentWindow;
-    private Long beautyMasterId;
+    private Long masterId;
 }

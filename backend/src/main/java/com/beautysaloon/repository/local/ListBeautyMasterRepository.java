@@ -22,7 +22,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
     private final static String DEFAULT_BEAUTY_MASTER_NAME_PATTERN = "Beauty Master %d";
     private final static String DEFAULT_PATIENT_NAME_PATTERN = "Patient %d";
 
-    private final List<BeautyMaster> beautyMasters = constructBeautyMasters();
+    private final List<BeautyMaster> beautyMasters = constructBeautyMastersData();
 
     @Override
     public List<BeautyMaster> findAll() {
@@ -44,7 +44,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
         return master;
     }
 
-    private static List<BeautyMaster> constructBeautyMasters() {
+    private static List<BeautyMaster> constructBeautyMastersData() {
         return IntStream.range(0, BEAUTY_MASTERS_COUNT)
                 .mapToObj(i -> {
 
@@ -62,7 +62,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                                 .appointmentWindow(counter)
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
                                 .date(LocalDate.now())
-                                .beautyMasterId(beautyMaster.getId())
+                                .masterId(beautyMaster.getId())
                                 .build();
                         appointments.add(sampleAppointment);
                     }
