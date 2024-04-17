@@ -9,7 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -68,4 +71,40 @@ public class RestApiController {
             return new ResponseEntity<>("Master with given id is not found.", HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/appointment/{appointmentId}")
+    public ResponseEntity<Appointment> checkAppointment(@PathVariable Long appointmentId) {
+        var masters = beautyMasterRepository.findAll();
+        var appointmentOptional = masters.stream()
+                .flatMap(beautyMaster -> beautyMaster.getAppointments().stream())
+                .filter(app -> app.getId().equals(appointmentId))
+                .findAny();
+
+        if (appointmentOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(appointmentOptional.get(), HttpStatus.OK);
+        }
+    }
+
+    @DeleteMapping("/appointment/{appointmentId}")
+    public ResponseEntity<String> removeAppointment(@PathVariable Long appointmentId) {
+        var masters = beautyMasterRepository.findAll();
+        var masterOptional = masters.stream()
+                .filter(master -> master.getAppointments().stream()
+                        .map(Appointment::getId)
+                        .anyMatch(aid -> aid.equals(appointmentId)))
+                .findAny();
+
+        if (masterOptional.isEmpty()) {
+            return new ResponseEntity<>("Master not found or appointment does not exist", HttpStatus.NOT_FOUND);
+        } else {
+            masterOptional.get()
+                    .getAppointments()
+                    .removeIf(appointment -> appointment.getId().equals(appointmentId));
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
 }
