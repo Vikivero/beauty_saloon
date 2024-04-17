@@ -2,8 +2,12 @@ doctype html
 html
   head
     title= `${title}`
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/styles.css')
 
-  body
-    h1 Event Registration
+  body(style="background-color: #AFB0B2;")
+    div.container
+        img(src="logo.svg", alt="")
+        //- h1.text-center.mb-4 Event Registration
 
-    block content
+        block content

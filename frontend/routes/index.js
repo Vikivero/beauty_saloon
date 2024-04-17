@@ -4,7 +4,15 @@ const { check, validationResult } = require("express-validator");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("form", { title: "Registration form" });
+  res.render("index", { title: "Index page" });
+});
+
+router.get("/register", (req, res) => {
+  res.render("register", { title: "Register Appointment" });
+});
+
+router.get("/check", (req, res) => {
+  res.render("check", { title: "Check/Remove Appointment" });
 });
 
 router.post(

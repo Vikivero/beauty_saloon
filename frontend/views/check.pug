@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  -data = data || {}
+
+  div.form-wrapper
+    if errors
+      ul.error-messages
+        for error in errors
+          li= error.msg
+
+
+    form(action="." method="POST")
+      div.mb-3
+        label(for="ticketId" class="form-label") Name:
+        input(
+          type="text"
+          class="form-control"
+          id="ticketId"
+          name="ticketId"
+          placeholder="Enter your appointment number"
+          value=data.appointmentNumber
+        )
+
+      input(
+        type="submit"
+        class="btn btn-primary"
+        value="Submit"
+      )
