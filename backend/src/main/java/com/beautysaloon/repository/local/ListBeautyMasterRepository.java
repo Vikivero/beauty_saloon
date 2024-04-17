@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -28,6 +29,21 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
         return beautyMasters;
     }
 
+    @Override
+    public Optional<BeautyMaster> findById(long beautyMasterId) {
+        return beautyMasters.stream()
+                .filter(beautyMaster -> beautyMaster.getId() == beautyMasterId)
+                .findAny();
+    }
+
+    @Override
+    public BeautyMaster save(BeautyMaster master) {
+        beautyMasters.remove(master);
+        beautyMasters.add(master);
+
+        return master;
+    }
+
     private static List<BeautyMaster> constructBeautyMasters() {
         return IntStream.range(0, BEAUTY_MASTERS_COUNT)
                 .mapToObj(i -> {
@@ -41,7 +57,8 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                     for (int j = 0; j < APPOINTMENTS_PER_MASTER; j++) {
                         var counter = j * (i + 1);
                         var sampleAppointment = Appointment.builder()
-                                .id((long) counter)
+                                .id(Long.parseLong(LocalDate.now().toEpochDay() + "" + beautyMaster.getId() + "" + counter))
+//                                .id((long) counter)
                                 .appointmentWindow(counter)
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
                                 .date(LocalDate.now())
