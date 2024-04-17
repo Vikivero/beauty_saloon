@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,7 +44,21 @@ public class RestApiController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerAppointment(@RequestBody Appointment appointment) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Long> registerAppointment(@RequestBody Appointment appointment) {
+        var masterOptional = beautyMasterRepository.findById(appointment.getBeautyMasterId());
+
+        if (masterOptional.isPresent()) {
+            var master = masterOptional.get();
+
+            long generatedAppointmentId = Long.parseLong(LocalDate.now().toEpochDay() + "" + master.getId() + "" + appointment.getAppointmentWindow());
+            appointment.setId(generatedAppointmentId);
+            master.getAppointments().add(appointment);
+
+            beautyMasterRepository.save(master);
+
+            return new ResponseEntity<>(generatedAppointmentId, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(-1L, HttpStatus.NOT_FOUND);
+        }
     }
 }
