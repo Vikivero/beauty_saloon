@@ -8,6 +8,8 @@ router.get("/", (req, res) => {
 });
 
 router.get("/register", (req, res) => {
+  // Get masters data from backend
+  // show calendar with free days
   res.render("register", { title: "Register Appointment" });
 });
 
