@@ -1,7 +1,13 @@
 extends layout
 
 block content
-  -data = data || {}
+  //- Temp placeholder for not available dates
+  -data = data || { datesForDisable: ["25.04.2024", "27.04.2024"] }
+
+  //- Datepicker handler
+  script.
+    var data = !{JSON.stringify(data)};
+  script(src="/js/main.js")
 
   div.form-wrapper
     if errors
@@ -9,8 +15,8 @@ block content
         for error in errors
           li= error.msg
 
-
-    form(action="." method="POST")
+    h1.text-center.mb-4 Register a visit
+    form(action="/register" method="POST")
       div.mb-3
         label(for="name" class="form-label") Name:
         input(
@@ -22,14 +28,13 @@ block content
           value=data.name
         )
       div.mb-3
-        label(for="email" class="form-label") Email:
+        label(for="date" class="form-label") Selected Date:
         input(
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-          value=data.email
+          type="button"
+          class="btn btn-secondary"
+          id="date"
+          name="date"
+          value=data.date ? data.date : "dd.mm.yyyy",
         )
 
       input(

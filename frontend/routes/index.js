@@ -13,12 +13,8 @@ router.get("/register", (req, res) => {
   res.render("register", { title: "Register Appointment" });
 });
 
-router.get("/check", (req, res) => {
-  res.render("check", { title: "Check/Remove Appointment" });
-});
-
 router.post(
-  "/",
+  "/register",
   [
     check("name").isLength({ min: 1 }).withMessage("Please enter a name"),
     check("email").isLength({ min: 1 }).withMessage("Please enter an email"),
@@ -37,5 +33,9 @@ router.post(
     }
   }
 );
+
+router.get("/check", (req, res) => {
+  res.render("check", { title: "Check/Remove Appointment" });
+});
 
 module.exports = router;
