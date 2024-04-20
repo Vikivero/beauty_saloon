@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  //- Temp placeholder for not available dates
-  -data = data || { datesForDisable: ["25.04.2024", "27.04.2024"] }
+  -userData = userData || {}
+  -serverData = serverData || { datesForDisable:[], availableMasters:{} }
 
   //- Datepicker handler
   script.
-    var data = !{JSON.stringify(data)};
+    var serverData = !{JSON.stringify(serverData)};
   script(src="/js/main.js")
 
   div.form-wrapper
@@ -18,14 +18,14 @@ block content
     h1.text-center.mb-4 Register a visit
     form(action="/register" method="POST")
       div.mb-3
-        label(for="name" class="form-label") Name:
+        label(for="user" class="form-label") Name:
         input(
           type="text"
           class="form-control"
-          id="name"
-          name="name"
+          id="user"
+          name="user"
           placeholder="Enter your full name"
-          value=data.name
+          value=userData.name
         )
       div.mb-3
         label(for="date" class="form-label") Selected Date:
@@ -34,8 +34,15 @@ block content
           class="btn btn-secondary"
           id="date"
           name="date"
-          value=data.date ? data.date : "dd.mm.yyyy",
+          value=userData.date ? userData.date : "dd.mm.yyyy",
         )
+      div.mb-3
+        label(for="master" class="form-label") Selected Master:
+        select#master.form-select(
+          name="master"
+          disabled
+        )
+          option(disabled selected) Select the date first
 
       input(
         type="submit"

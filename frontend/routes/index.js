@@ -7,10 +7,27 @@ router.get("/", (req, res) => {
   res.render("index", { title: "Index page" });
 });
 
+// Placeholder server data
+const serverData = {
+  datesForDisable: ["25.04.2024", "27.04.2024"],
+  availableMasters: {
+    "22.04.2024": [
+      { id: 0, name: "Master 1" },
+      { id: 1, name: "Master 2" },
+      { id: 2, name: "Master 3" },
+    ],
+  },
+};
+
 router.get("/register", (req, res) => {
   // Get masters data from backend
   // show calendar with free days
-  res.render("register", { title: "Register Appointment" });
+  // todo: get server data
+
+  res.render("register", {
+    title: "Register Appointment",
+    serverData: serverData,
+  });
 });
 
 router.post(
@@ -21,14 +38,15 @@ router.post(
   ],
   (req, res) => {
     const errors = validationResult(req);
-
+    // todo: get server data
     if (errors.isEmpty()) {
       res.send("Thank you for your registration!");
     } else {
       res.render("form", {
         title: "Registration form",
         errors: errors.array(),
-        data: req.body,
+        userData: req.body,
+        serverData: serverData,
       });
     }
   }
