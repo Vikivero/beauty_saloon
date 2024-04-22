@@ -9,8 +9,8 @@ block content
         for error in errors
           li= error.msg
 
-
-    form(action="." method="POST")
+    h1.text-center.mb-4 Register a visit
+    form(action="/check" method="POST")
       div.mb-3
         label(for="ticketId" class="form-label") Name:
         input(

@@ -36,7 +36,7 @@ block content
       div.mb-3
         label(for="date" class="form-label") Selected Date:
         input(
-          type="button"
+          type="text"
           class="btn btn-secondary"
           id="date"
           name="date"
@@ -72,6 +72,9 @@ block content
 
           input.btn-check(type="radio", name="btnradio", id="window7", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window7") 16:00 - 16:45
+
+        input(type="hidden", name="selectedTime", id="selectedTime")
+
 
       input(
         type="submit"

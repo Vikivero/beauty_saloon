@@ -2,6 +2,23 @@ $(document).ready(function () {
   let masters = serverData.availableMasters;
 
   let selectedMasterBusyWindows = {};
+  function lockTimeSelector() {
+    for (i = 0; i < 8; i++) {
+      var buttonId = "#window" + i;
+      $(buttonId).prop("disabled", true);
+    }
+  }
+
+  function unlockTimeSelectorExceptGiven(indexes) {
+    for (i = 0; i < 8; i++) {
+      var buttonId = "#window" + i;
+      if (!indexes.includes(i)) {
+        $(buttonId).prop("disabled", false);
+      } else {
+        $(buttonId).prop("disabled", true);
+      }
+    }
+  }
 
   $("#date")
     .datepicker({
@@ -12,25 +29,13 @@ $(document).ready(function () {
       daysOfWeekDisabled: [0, 6],
       closeOnDateSelect: true,
       autoclose: true,
+      defaultViewDate: null,
     })
     .on("changeDate", function (e) {
       let currentBusyWindows = selectedMasterBusyWindows["" + e.format()] || [];
-      // if (currentBusyWindows && currentBusyWindows.length > 0) {
-      //   currentBusyWindows.forEach(function (index) {
-      //     var buttonId = "#window" + index;
-      //     $(buttonId).prop("disabled", true);
-      //   });
-      // }
       unlockTimeSelectorExceptGiven(currentBusyWindows);
     });
   if (masters && masters.length > 0) {
-    $("#master").append(
-      $("<option>", {
-        text: "Select your master",
-        selected: true,
-        disabled: true,
-      })
-    );
     masters.forEach(function (master) {
       $("#master").append(
         $("<option>", {
@@ -40,23 +45,7 @@ $(document).ready(function () {
       );
     });
 
-    function lockTimeSelector() {
-      for (i = 0; i < 8; i++) {
-        var buttonId = "#window" + i;
-        $(buttonId).prop("disabled", true);
-      }
-    }
-
-    function unlockTimeSelectorExceptGiven(indexes) {
-      for (i = 0; i < 8; i++) {
-        var buttonId = "#window" + i;
-        if (!indexes.includes(i)) {
-          $(buttonId).prop("disabled", false);
-        }
-      }
-    }
-
-    $("#master").on("change", function () {
+    $("#master").on("click", function () {
       lockTimeSelector();
       $("#date").val("dd.mm.yyyy").datepicker("update");
       let selectedMasterId = $(this).find(":selected").val();
@@ -87,4 +76,8 @@ $(document).ready(function () {
     );
     $("#master").attr("disabled", "disabled");
   }
+
+  $('input[name="btnradio"]').click(function () {
+    $("#selectedTime").val($(this).attr("id").replace("window", ""));
+  });
 });

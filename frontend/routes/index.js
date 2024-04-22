@@ -60,14 +60,15 @@ router.get("/register", (req, res) => {
 router.post(
   "/register",
   [
-    check("name").isLength({ min: 1 }).withMessage("Please enter a name"),
-    check("email").isLength({ min: 1 }).withMessage("Please enter an email"),
+    // check("name").isLength({ min: 1 }).withMessage("Please enter a name"),
+    // check("email").isLength({ min: 1 }).withMessage("Please enter an email"),
   ],
   (req, res) => {
     const errors = validationResult(req);
     // todo: get server data
     if (errors.isEmpty()) {
-      res.send("Thank you for your registration!");
+      res.send(req.body);
+      // res.send("Thank you for your registration!");
     } else {
       res.render("form", {
         title: "Registration form",
