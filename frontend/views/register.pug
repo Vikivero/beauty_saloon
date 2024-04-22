@@ -28,6 +28,12 @@ block content
           value=userData.name
         )
       div.mb-3
+        label(for="master" class="form-label") Selected Master:
+        select#master.form-select(
+          name="master"
+        )
+          option(disabled selected) Select master
+      div.mb-3
         label(for="date" class="form-label") Selected Date:
         input(
           type="button"
@@ -35,19 +41,16 @@ block content
           id="date"
           name="date"
           value=userData.date ? userData.date : "dd.mm.yyyy",
+          disabled 
         )
-      div.mb-3
-        label(for="master" class="form-label") Selected Master:
-        select#master.form-select(
-          name="master"
-          disabled
-        )
-          option(disabled selected) Select the date first
 
       div#time.mb-3
         div
           label(class="form-label") Selected Time:
         div.col-6.p-1.btn-group-vertical.mb-2(role="group")
+          input.btn-check(type="radio", name="btnradio", id="window0", autocomplete="off" disabled)
+          label.btn.btn-outline-primary(for="window0") 08:00 - 08:45
+
           input.btn-check(type="radio", name="btnradio", id="window1", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window1") 09:00 - 09:45
 
@@ -57,10 +60,10 @@ block content
           input.btn-check(type="radio", name="btnradio", id="window3", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window3") 11:00 - 11:45
 
+        div.col-6.p-1.btn-group-vertical.mb-2(role="group")
           input.btn-check(type="radio", name="btnradio", id="window4", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window4") 12:00 - 12:45
 
-        div.col-6.p-1.btn-group-vertical.mb-2(role="group")
           input.btn-check(type="radio", name="btnradio", id="window5", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window5") 14:00 - 14:45
 
@@ -69,9 +72,6 @@ block content
 
           input.btn-check(type="radio", name="btnradio", id="window7", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window7") 16:00 - 16:45
-
-          input.btn-check(type="radio", name="btnradio", id="window8", autocomplete="off" disabled)
-          label.btn.btn-outline-primary(for="window8") 17:00 - 17:45
 
       input(
         type="submit"

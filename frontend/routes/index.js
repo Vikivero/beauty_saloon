@@ -10,13 +10,40 @@ router.get("/", (req, res) => {
 // Placeholder server data
 const serverData = {
   datesForDisable: ["25.04.2024", "27.04.2024"],
-  availableMasters: {
-    "22.04.2024": [
-      { id: 0, name: "Master 1" },
-      { id: 1, name: "Master 2" },
-      { id: 2, name: "Master 3" },
-    ],
-  },
+  availableMasters: [
+    {
+      masterId: 0,
+      masterName: "Beauty Master 0",
+      busyWindows: {
+        "22.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      },
+    },
+    {
+      masterId: 1,
+      masterName: "Beauty Master 1",
+      busyWindows: {
+        "22.04.2024": [0, 2, 4, 6, 8],
+        "25.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      },
+    },
+    {
+      masterId: 2,
+      masterName: "Beauty Master 2",
+      busyWindows: {
+        "22.04.2024": [0, 3, 6],
+        "26.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      },
+    },
+    {
+      masterId: 3,
+      masterName: "Beauty Master 3",
+      busyWindows: {
+        "22.04.2024": [1, 2, 3, 4, 8],
+        "23.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "24.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      },
+    },
+  ],
 };
 
 router.get("/register", (req, res) => {
