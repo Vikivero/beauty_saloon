@@ -76,7 +76,7 @@ router.post(
     const errors = validationResult(req);
     // todo: get server data
     if (errors.isEmpty()) {
-      res.send(req.body);
+      // res.send(req.body);
 
       // todo: send data to backend and get appointmentId
       let appointmentId = 10033;

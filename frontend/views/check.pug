@@ -9,17 +9,17 @@ block content
         for error in errors
           li= error.msg
 
-    h1.text-center.mb-4 Register a visit
+    h1.text-center.mb-4 Check your visit
     form(action="/check" method="POST")
       div.mb-3
-        label(for="ticketId" class="form-label") Name:
+        label(for="ticketId" class="form-label") Appointment Number:
         input(
           type="text"
           class="form-control"
           id="ticketId"
           name="ticketId"
           placeholder="Enter your appointment number"
-          value=data.appointmentNumber
+          value=data.appointmentId
         )
 
       input(
