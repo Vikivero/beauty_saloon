@@ -49,7 +49,8 @@ const serverData = {
 router.get("/register", (req, res) => {
   // Get masters data from backend
   // show calendar with free days
-  // todo: get server data
+
+  // todo: get master data from server backend
 
   res.render("register", {
     title: "Register Appointment",
@@ -60,17 +61,33 @@ router.get("/register", (req, res) => {
 router.post(
   "/register",
   [
-    // check("name").isLength({ min: 1 }).withMessage("Please enter a name"),
-    // check("email").isLength({ min: 1 }).withMessage("Please enter an email"),
+    check("user").isLength({ min: 1 }).withMessage("Please enter a name"),
+    check("master").isInt().withMessage("Please select a master"),
+    check("date")
+      .notEmpty()
+      .not()
+      .equals("dd.mm.yyyy")
+      .withMessage("Please select a date"),
+    check("selectedTime")
+      .isInt()
+      .withMessage("Please select an appointment time"),
   ],
   (req, res) => {
     const errors = validationResult(req);
     // todo: get server data
     if (errors.isEmpty()) {
       res.send(req.body);
+
+      // todo: send data to backend and get appointmentId
+      let appointmentId = 10033;
+
+      res.render("check", {
+        title: "Check/Remove Appointment",
+        data: { appointmentId: appointmentId } || {},
+      });
       // res.send("Thank you for your registration!");
     } else {
-      res.render("form", {
+      res.render("register", {
         title: "Registration form",
         errors: errors.array(),
         userData: req.body,

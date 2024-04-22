@@ -25,7 +25,7 @@ block content
           id="user"
           name="user"
           placeholder="Enter your full name"
-          value=userData.name
+          value=userData.user
         )
       div.mb-3
         label(for="master" class="form-label") Selected Master:
@@ -41,7 +41,7 @@ block content
           id="date"
           name="date"
           value=userData.date ? userData.date : "dd.mm.yyyy",
-          disabled 
+          disabled=userData.date ? false : true 
         )
 
       div#time.mb-3
@@ -54,7 +54,7 @@ block content
           input.btn-check(type="radio", name="btnradio", id="window1", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window1") 09:00 - 09:45
 
-          input.btn-check(type="radio", name="btnradio", id="window2", autocomplete="off" disabled)
+          input.btn-check(type="radio", name="btnradio", id="window2", autocomplete="off" disabled value=userData.selectedTime==0)
           label.btn.btn-outline-primary(for="window2") 10:00 - 10:45
 
           input.btn-check(type="radio", name="btnradio", id="window3", autocomplete="off" disabled)
@@ -73,8 +73,7 @@ block content
           input.btn-check(type="radio", name="btnradio", id="window7", autocomplete="off" disabled)
           label.btn.btn-outline-primary(for="window7") 16:00 - 16:45
 
-        input(type="hidden", name="selectedTime", id="selectedTime")
-
+        input(type="hidden", name="selectedTime", id="selectedTime" value=userData.selectedTime)
 
       input(
         type="submit"
