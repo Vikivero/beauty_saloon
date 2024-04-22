@@ -37,4 +37,7 @@ $(document).ready(function () {
         $("#master").addAttr("disabled");
       }
     });
+  
+  $("#master").
+  
 });
