@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 public class ListBeautyMasterRepository implements BeautyMasterRepository {
 
     private final static int BEAUTY_MASTERS_COUNT = 4;
-    private final static int APPOINTMENTS_PER_MASTER = 10;
+    private final static int APPOINTMENTS_PER_MASTER = 8;
     private final static String DEFAULT_BEAUTY_MASTER_NAME_PATTERN = "Beauty Master %d";
     private final static String DEFAULT_PATIENT_NAME_PATTERN = "Patient %d";
 
@@ -53,15 +53,26 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                             .name(String.format(DEFAULT_BEAUTY_MASTER_NAME_PATTERN, i))
                             .build();
 
+                    // Adds busy day
                     List<Appointment> appointments = new ArrayList<>();
                     for (int j = 0; j < APPOINTMENTS_PER_MASTER; j++) {
-                        var counter = j * (i + 1);
                         var sampleAppointment = Appointment.builder()
-                                .id(Long.parseLong(LocalDate.now().toEpochDay() + "" + beautyMaster.getId() + "" + counter))
-//                                .id((long) counter)
-                                .appointmentWindow(counter)
+                                .id((long) j)
+                                .appointmentWindow(j)
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
-                                .date(LocalDate.now())
+                                .date(LocalDate.now().plusDays(i))
+                                .masterId(beautyMaster.getId())
+                                .build();
+                        appointments.add(sampleAppointment);
+                    }
+
+                    // Adds a day with some free windows
+                    for (int j = 0; j < 3; j++) {
+                        var sampleAppointment = Appointment.builder()
+                                .id((long) j)
+                                .appointmentWindow(j)
+                                .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
+                                .date(LocalDate.now().plusDays(i + 1))
                                 .masterId(beautyMaster.getId())
                                 .build();
                         appointments.add(sampleAppointment);
