@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  -data = data || {user: "us", master: "mas", date: "dd-mm-yy", time: "10:30"}
+
+  div.form-wrapper
+    h1.text-center.mb-4(style="font-size: 1.5em;") Your Visit Details
+    table.mb-4(style="border-collapse: collapse; width: 100%; font-size: 1.2em;")
+      tr
+        td(style="text-align: right; padding: 5px; width: 50%; font-weight: bold;") Name:
+        td(style="padding: 5px; width: 50%; font-style: italic;") #{data.user}
+      tr
+        td(style="text-align: right; padding: 5px; font-weight: bold;") Master:
+        td(style="padding: 5px; font-style: italic;") #{data.master}
+      tr
+        td(style="text-align: right; padding: 5px; font-weight: bold;") Visit Date:
+        td(style="padding: 5px; font-style: italic;") #{data.date}
+      tr
+        td(style="text-align: right; padding: 5px; font-weight: bold;") Visit Time:
+        td(style="padding: 5px; font-style: italic;") #{data.time}
+    
+    a.btn.btn-danger.mt-4(href="#") Cancel Visit

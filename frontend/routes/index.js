@@ -101,4 +101,8 @@ router.get("/check", (req, res) => {
   res.render("check", { title: "Check/Remove Appointment" });
 });
 
+router.get("/details", (req, res) => {
+  res.render("details", { title: "Visit Details" });
+});
+
 module.exports = router;
