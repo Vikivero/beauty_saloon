@@ -101,8 +101,32 @@ router.get("/check", (req, res) => {
   res.render("check", { title: "Check/Remove Appointment" });
 });
 
+router.post("/check", (req, res) => {
+  // get data from backend
+  data = {
+    id: req.body.ticketId,
+    user: "John",
+    master: "Master 1",
+    date: "22.04.2024",
+    time: "10:00",
+  };
+  res.render("details", {
+    title: "Visit Details",
+    data: data || {},
+  });
+});
+
 router.get("/details", (req, res) => {
   res.render("details", { title: "Visit Details" });
+});
+
+router.get("/cancel", (req, res) => {
+  let visitId = req.query.id;
+  // todo: remove visit from backend
+  res.render("details", {
+    title: "Visit Details",
+    data: { id: visitId, cancelled: true },
+  });
 });
 
 module.exports = router;
