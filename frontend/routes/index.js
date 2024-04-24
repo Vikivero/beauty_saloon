@@ -1,5 +1,6 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
+const axios = require("axios");
 
 const router = express.Router();
 
@@ -8,54 +9,64 @@ router.get("/", (req, res) => {
 });
 
 // Placeholder server data
-const serverData = {
-  datesForDisable: ["25.04.2024", "27.04.2024"],
-  availableMasters: [
-    {
-      masterId: 0,
-      masterName: "Beauty Master 0",
-      busyWindows: {
-        "22.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      },
-    },
-    {
-      masterId: 1,
-      masterName: "Beauty Master 1",
-      busyWindows: {
-        "22.04.2024": [0, 2, 4, 6, 8],
-        "25.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      },
-    },
-    {
-      masterId: 2,
-      masterName: "Beauty Master 2",
-      busyWindows: {
-        "22.04.2024": [0, 3, 6],
-        "26.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      },
-    },
-    {
-      masterId: 3,
-      masterName: "Beauty Master 3",
-      busyWindows: {
-        "22.04.2024": [1, 2, 3, 4, 8],
-        "23.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
-        "24.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      },
-    },
-  ],
-};
+// const serverData = {
+//   datesForDisable: ["25.04.2024", "27.04.2024"],
+//   availableMasters: [
+//     {
+//       masterId: 0,
+//       masterName: "Beauty Master 0",
+//       busyWindows: {
+//         "22.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+//       },
+//     },
+//     {
+//       masterId: 1,
+//       masterName: "Beauty Master 1",
+//       busyWindows: {
+//         "22.04.2024": [0, 2, 4, 6, 8],
+//         "25.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+//       },
+//     },
+//     {
+//       masterId: 2,
+//       masterName: "Beauty Master 2",
+//       busyWindows: {
+//         "22.04.2024": [0, 3, 6],
+//         "26.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+//       },
+//     },
+//     {
+//       masterId: 3,
+//       masterName: "Beauty Master 3",
+//       busyWindows: {
+//         "22.04.2024": [1, 2, 3, 4, 8],
+//         "23.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+//         "24.04.2024": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+//       },
+//     },
+//   ],
+// };
 
 router.get("/register", (req, res) => {
   // Get masters data from backend
   // show calendar with free days
 
-  // todo: get master data from server backend
-
-  res.render("register", {
-    title: "Register Appointment",
-    serverData: serverData,
-  });
+  axios
+    .get("http://localhost:8080/api/master-appointments")
+    .then((response) => {
+      let serverData = response.data;
+      res.render("register", {
+        title: "Register Appointment",
+        serverData: serverData,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.render("register", {
+        title: "Register Appointment",
+        serverData: {},
+      });
+    });
 });
 
 router.post(
@@ -66,7 +77,7 @@ router.post(
     check("date")
       .notEmpty()
       .not()
-      .equals("dd.mm.yyyy")
+      .equals("yyyy-mm-dd")
       .withMessage("Please select a date"),
     check("selectedTime")
       .isInt()

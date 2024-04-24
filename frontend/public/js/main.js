@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  let masters = serverData.availableMasters;
+  let masters = serverData;
 
   let selectedMasterBusyWindows = {};
   function lockTimeSelector() {
@@ -22,7 +22,7 @@ $(document).ready(function () {
 
   $("#date")
     .datepicker({
-      format: "dd.mm.yyyy",
+      format: "yyyy-mm-dd",
       startDate: "0d",
       todayBtn: true,
       todayHighlight: true,
@@ -47,23 +47,28 @@ $(document).ready(function () {
 
     $("#master").on("click", function () {
       lockTimeSelector();
-      $("#date").val("dd.mm.yyyy").datepicker("update");
+      $("#date").val("yyyy-mm-dd").datepicker("update");
       let selectedMasterId = $(this).find(":selected").val();
+
       let master = masters.find(function (master) {
         return master.masterId == selectedMasterId;
       });
-      let fullyBusyDates = Object.keys(master.busyWindows).filter(function (
-        key
-      ) {
-        return [0, 1, 2, 3, 4, 5, 6, 7, 8].every(function (element) {
-          return master.busyWindows[key].includes(element);
+
+      console.log(master);
+      if (master) {
+        let fullyBusyDates = Object.keys(master.busyWindows).filter(function (
+          key
+        ) {
+          return [0, 1, 2, 3, 4, 5, 6, 7, 8].every(function (element) {
+            return master.busyWindows[key].includes(element);
+          });
         });
-      });
 
-      selectedMasterBusyWindows = master.busyWindows;
+        selectedMasterBusyWindows = master.busyWindows;
 
-      $("#date").datepicker("setDatesDisabled", fullyBusyDates);
-      $("#date").removeAttr("disabled");
+        $("#date").datepicker("setDatesDisabled", fullyBusyDates);
+        $("#date").removeAttr("disabled");
+      }
     });
   } else {
     // If no masters available, display only one option "No masters available"

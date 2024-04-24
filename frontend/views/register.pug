@@ -2,7 +2,7 @@ extends layout
 
 block content
   -userData = userData || {}
-  -serverData = serverData || { datesForDisable:[], availableMasters:{} }
+  -serverData = serverData || {}
 
   //- Datepicker handler
   script.
@@ -40,7 +40,7 @@ block content
           class="btn btn-secondary"
           id="date"
           name="date"
-          value=userData.date ? userData.date : "dd.mm.yyyy",
+          value=userData.date ? userData.date : "yyyy-mm-dd",
           disabled=userData.date ? false : true 
         )
 
