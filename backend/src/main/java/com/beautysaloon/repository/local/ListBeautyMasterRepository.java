@@ -57,7 +57,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                     List<Appointment> appointments = new ArrayList<>();
                     for (int j = 0; j < APPOINTMENTS_PER_MASTER; j++) {
                         var sampleAppointment = Appointment.builder()
-                                .id((long) j)
+                                .id(Long.parseLong(LocalDate.now().plusDays(i).toEpochDay() + "" + beautyMaster.getId() + "" + j))
                                 .appointmentWindow(j)
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
                                 .date(LocalDate.now().plusDays(i))
@@ -69,7 +69,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                     // Adds a day with some free windows
                     for (int j = 0; j < 3; j++) {
                         var sampleAppointment = Appointment.builder()
-                                .id((long) j)
+                                .id(Long.parseLong(LocalDate.now().plusDays(i + 1).toEpochDay() + "" + beautyMaster.getId() + "" + (j + appointments.size())))
                                 .appointmentWindow(j)
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
                                 .date(LocalDate.now().plusDays(i + 1))

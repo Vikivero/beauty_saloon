@@ -54,8 +54,10 @@ public class RestApiController {
             var master = masterOptional.get();
 
             var alreadyTakenWindows = master.getAppointments().stream()
+                    .filter(existing -> existing.getDate().isEqual(appointment.getDate()))
                     .map(Appointment::getAppointmentWindow)
                     .toList();
+
             if (alreadyTakenWindows.contains(appointment.getAppointmentWindow())) {
                 return new ResponseEntity<>("This appointment window is already taken.", HttpStatus.CONFLICT);
             }
