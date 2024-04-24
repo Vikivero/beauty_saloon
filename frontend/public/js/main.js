@@ -1,5 +1,7 @@
 $(document).ready(function () {
   let masters = serverData;
+  console.log("Masters:");
+  console.log(masters);
 
   let selectedMasterBusyWindows = {};
   function lockTimeSelector() {
@@ -54,7 +56,6 @@ $(document).ready(function () {
         return master.masterId == selectedMasterId;
       });
 
-      console.log(master);
       if (master) {
         let fullyBusyDates = Object.keys(master.busyWindows).filter(function (
           key
