@@ -158,17 +158,52 @@ router.get("/check", (req, res) => {
 
 router.post("/check", (req, res) => {
   // get data from backend
-  data = {
-    id: req.body.ticketId,
-    user: "John",
-    master: "Master 1",
-    date: "22.04.2024",
-    time: "10:00",
-  };
-  res.render("details", {
-    title: "Visit Details",
-    data: data || {},
-  });
+
+  let appointmentId = req.body.ticketId;
+  axios
+    .get(`http://localhost:8080/api/appointment/${appointmentId}`)
+    .then((response) => {
+      let responseBody = response.data;
+      console.log(response.data);
+      let timeWindows = [
+        "08:00 - 08:45",
+        "09:00 - 09:45",
+        "10:00 - 10:45",
+        "11:00 - 11:45",
+        "12:00 - 12:45",
+        "13:00 - 13:45",
+        "14:00 - 14:45",
+        "15:00 - 15:45",
+        "16:00 - 16:45",
+      ];
+
+      data = {
+        id: responseBody.id,
+        user: responseBody.patientName,
+        master: responseBody.masterName,
+        date: responseBody.date,
+        time: timeWindows[responseBody.appointmentWindow],
+      };
+      res.render("details", {
+        title: "Visit Details",
+        data: data || {},
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  // data = {
+  //   id: req.body.ticketId,
+  //   user: "John",
+  //   master: "Master 1",
+  //   date: "22.04.2024",
+  //   time: "10:00",
+  // };
+  // res.render("details", {
+  //   title: "Visit Details",
+  //   data: data || {},
+  // });
 });
 
 router.get("/details", (req, res) => {
