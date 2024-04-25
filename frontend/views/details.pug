@@ -4,9 +4,17 @@ block content
   -data = data || {}
 
   div.form-wrapper
+    if errors
+        ul.error-messages
+          for error in errors
+            li= error.msg
+
     h1.text-center.mb-4(style="font-size: 1.5em;") Your Visit Details
     - if (data.cancelled)
       p.mb-2(style="color: red; font-size: 1.5em;") Visit number #{data.id} cancelled.
+      a.btn.btn-secondary.mt-2(href=".") Home
+    - else if(data.notFound)
+      p.mb-2(style="color: red; font-size: 1.5em;") Visit number #{data.id} is not found.
       a.btn.btn-secondary.mt-2(href=".") Home
     - else
       table.mb-4(style="border-collapse: collapse; width: 100%; font-size: 1.2em;")

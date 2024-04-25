@@ -191,19 +191,11 @@ router.post("/check", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
+      res.render("details", {
+        title: "Visit Details",
+        data: { id: appointmentId, notFound: true },
+      });
     });
-
-  // data = {
-  //   id: req.body.ticketId,
-  //   user: "John",
-  //   master: "Master 1",
-  //   date: "22.04.2024",
-  //   time: "10:00",
-  // };
-  // res.render("details", {
-  //   title: "Visit Details",
-  //   data: data || {},
-  // });
 });
 
 router.get("/details", (req, res) => {
@@ -212,11 +204,24 @@ router.get("/details", (req, res) => {
 
 router.get("/cancel", (req, res) => {
   let visitId = req.query.id;
-  // todo: remove visit from backend
-  res.render("details", {
-    title: "Visit Details",
-    data: { id: visitId, cancelled: true },
-  });
+
+  axios
+    .delete(`http://localhost:8080/api/appointment/${visitId}`)
+    .then((response) => {
+      console.log("success");
+
+      res.render("details", {
+        title: "Visit Details",
+        data: { id: visitId, cancelled: true },
+      });
+    })
+    .catch((error) => {
+      console.log("error");
+      res.render("details", {
+        title: "Visit Details",
+        data: { id: visitId, notFound: true },
+      });
+    });
 });
 
 module.exports = router;
