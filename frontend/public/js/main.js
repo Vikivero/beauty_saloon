@@ -1,19 +1,6 @@
 $(document).ready(function () {
   let masters = serverData;
-  masters.sort(function (a, b) {
-    var nameA = a.masterName.toUpperCase(); // ignore upper and lowercase
-    var nameB = b.masterName.toUpperCase(); // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-
-    // names must be equal
-    return 0;
-  });
-
+  
   console.log("Masters:");
   console.log(masters);
 
