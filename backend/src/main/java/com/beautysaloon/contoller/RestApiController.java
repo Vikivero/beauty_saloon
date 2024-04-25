@@ -107,6 +107,8 @@ public class RestApiController {
                     .getAppointments()
                     .removeIf(appointment -> appointment.getId().equals(appointmentId));
 
+            beautyMasterRepository.save(masterOptional.get());
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
