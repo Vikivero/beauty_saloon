@@ -47,6 +47,8 @@ router.get("/", (req, res) => {
 //   ],
 // };
 
+let serverData = {};
+
 router.get("/register", (req, res) => {
   // Get masters data from backend
   // show calendar with free days
@@ -54,7 +56,7 @@ router.get("/register", (req, res) => {
   axios
     .get("http://localhost:8080/api/master-appointments")
     .then((response) => {
-      let serverData = response.data;
+      serverData = response.data;
       res.render("register", {
         title: "Register Appointment",
         serverData: serverData,
@@ -87,16 +89,58 @@ router.post(
     const errors = validationResult(req);
     // todo: get server data
     if (errors.isEmpty()) {
-      res.send(req.body);
-      // {"user":"sdff","master":"0","date":"2024-04-24","btnradio":"on","selectedTime":"4"}
-      // todo: send data to backend and get appointmentId
-      let appointmentId = 10033;
+      // Data recieved from form:
+      // { "user": "sdff", "master": "0", "date": "2024-04-24", "btnradio": "on", "selectedTime": "4" }
+      let enteredData = req.body;
+      let requestData = {
+        patientName: enteredData.user,
+        date: enteredData.date,
+        appointmentWindow: enteredData.selectedTime,
+        masterId: enteredData.master,
+      };
 
-      res.render("check", {
-        title: "Check/Remove Appointment",
-        data: { appointmentId: appointmentId } || {},
-      });
-      // res.send("Thank you for your registration!");
+      axios
+        .post("http://localhost:8080/api/register", requestData)
+        .then((response) => {
+          let responseBody = response.data;
+          let appointmentId = responseBody;
+          console.log("Appointment created. Id: " + appointmentId);
+
+          res.render("check", {
+            title: "Check/Remove Appointment",
+            data: { appointmentId: appointmentId } || {},
+          });
+        })
+        .catch((error) => {
+          console.error("Error creating appointment: " + error);
+
+          let errors = [
+            { msg: "Appointment Already Registered or Connection Error" },
+          ];
+
+          axios
+            .get("http://localhost:8080/api/master-appointments")
+            .then((response) => {
+              let serverData = response.data;
+              res.render("register", {
+                title: "Register Appointment",
+                serverData: serverData,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              res.render("register", {
+                title: "Register Appointment",
+                serverData: {},
+              });
+            });
+          res.render("register", {
+            title: "Registration form",
+            errors: errors,
+            userData: req.body,
+            serverData: serverData,
+          });
+        });
     } else {
       res.render("register", {
         title: "Registration form",

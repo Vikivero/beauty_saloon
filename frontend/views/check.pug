@@ -9,6 +9,16 @@ block content
         for error in errors
           li= error.msg
 
+
+    - if(data.appointmentId)
+        div.d-flex.flex-column.justify-content-center.align-items-center.mb-4
+          div.row.text-center.mb-2
+            div.col
+              h3 Your appointment Number is
+          div.row.text-center
+            div.col
+              span.display-4.fw-bold.mb-0 #{data.appointmentId}
+
     h1.text-center.mb-4 Check your visit
     form(action="/check" method="POST")
       div.mb-3

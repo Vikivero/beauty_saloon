@@ -73,7 +73,7 @@ $(document).ready(function () {
     });
   } else {
     // If no masters available, display only one option "No masters available"
-    $("#master").clear();
+    $("#master").val([]);
     $("#master").append(
       $("<option>", {
         value: "",
