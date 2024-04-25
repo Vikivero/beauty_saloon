@@ -13,4 +13,5 @@ public class Appointment {
     private LocalDate date;
     private int appointmentWindow;
     private Long masterId;
+    private String masterName;
 }

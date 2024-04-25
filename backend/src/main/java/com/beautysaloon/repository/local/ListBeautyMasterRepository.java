@@ -62,6 +62,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
                                 .date(LocalDate.now().plusDays(i))
                                 .masterId(beautyMaster.getId())
+                                .masterName(beautyMaster.getName())
                                 .build();
                         appointments.add(sampleAppointment);
                     }
@@ -74,6 +75,7 @@ public class ListBeautyMasterRepository implements BeautyMasterRepository {
                                 .patientName(String.format(DEFAULT_PATIENT_NAME_PATTERN, i))
                                 .date(LocalDate.now().plusDays(i + 1))
                                 .masterId(beautyMaster.getId())
+                                .masterName(beautyMaster.getName())
                                 .build();
                         appointments.add(sampleAppointment);
                     }

@@ -64,6 +64,8 @@ public class RestApiController {
 
             long generatedAppointmentId = Long.parseLong(LocalDate.now().toEpochDay() + "" + master.getId() + "" + appointment.getAppointmentWindow());
             appointment.setId(generatedAppointmentId);
+            appointment.setMasterName(master.getName());
+
             master.getAppointments().add(appointment);
 
             beautyMasterRepository.save(master);
