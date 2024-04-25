@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Repository
-@Primary
+//@Primary
 public class ListBeautyMasterRepository implements BeautyMasterRepository {
 
     private final static int BEAUTY_MASTERS_COUNT = 4;
