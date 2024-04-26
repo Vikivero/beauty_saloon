@@ -1,5 +1,8 @@
 # Rejestracja w Beauty Saloon - Backend i Frontend
-
+## Autorzy
+- Viktoriia Chernik
+- Antonina Dominiak
+  
 ## Opis
 Repozytorium zawiera kod źródłowy prostego systemu do rezerwacji wizyt w salonie urody. Backend aplikacji - w języku Java przy użyciu frameworka Spring Boot, wykorzystując bazę danych MongoDB. Frontend korzysta z biblioteki Bootstrap i języka JavaScript w NodeJs. Aplikacja udostępnia REST API do komunikacji między backendem a frontendem.
 
