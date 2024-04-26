@@ -27,5 +27,6 @@ Aby uruchomić aplikację, należy postępować zgodnie z instrukcjami dla backe
 
 ### Frontend
 1. W terminalu przejdź do katalogu `frontend`
-2. Uruchom aplikację - npm run dev
-3. Otworz stronę w przegladarce http://localhost:3000/
+2. odpal `npm install`
+3. Uruchom aplikację - npm run dev
+4. Otworz stronę w przegladarce http://localhost:3000/
